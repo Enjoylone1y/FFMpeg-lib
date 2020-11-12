@@ -6,3 +6,4 @@ scratch-fdk-aac/**
 scratch-lame/**
 scratch-x264/**
 scratch-ffmpeg/**
+thin-ffmpeg/**

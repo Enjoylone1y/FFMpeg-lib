@@ -5,7 +5,7 @@ NDK_ROOT=/Users/patch/Work/android-ndk-r16b
 ANDROID_API_VERSION=19
 NDK_TOOLCHAIN_ABI_VERSION=4.9
 
-ABIS="armeabi-v7a arm64-v8a x86 x86_64"
+ABIS="arm64-v8a x86 x86_64"
 
 CWD=`pwd`
 
@@ -14,8 +14,7 @@ TOOLCHAINS_PREFIX="arm-linux-androideabi"
 TOOLCHAINS_PATH=${TOOLCHAINS}/bin
 SYSROOT=${TOOLCHAINS}/sysroot
 
-CFLAGS="${CFLAGS} --sysroot=${SYSROOT} -I${SYSROOT}/usr/include -I${TOOLCHAINS}/include"
-CPPFLAGS="${CFLAGS}"
+COMM_CFLAGS="${CFLAGS} --sysroot=${SYSROOT} -I${SYSROOT}/usr/include -I${TOOLCHAINS}/include -O2"
 LDFLAGS="${LDFLAGS} -L${SYSROOT}/usr/lib -L${TOOLCHAINS}/lib"
 
 
@@ -85,8 +84,7 @@ function configure_make_install()
 
     $CWD/$SOURCE/configure \
 	    --enable-static \
-        --disable-shared \
-        --with-sysroot="$SYSROOT" \
+        --with-pic \
         --host="$TOOLCHAINS_PREFIX" \
        --prefix="$THIN/$ARCH_PREFIX"
 
@@ -107,7 +105,9 @@ do
         ANDROID_API_VERSION=19
         ARCH_PREFIX=$ABI
         TOOLCHAINS_PREFIX=arm-linux-androideabi
-        make_standalone_toolchain arm android-$ANDROID_API_VERSION ${TOOLCHAINS}
+        CFLAGS="${COMM_CFLAGS} -mfloat-abi=softfp -mfpu=neon -march=armv5"
+        CPPFLAGS="${CFLAGS}"
+        make_standalone_toolchain arm $ANDROID_API_VERSION ${TOOLCHAINS}
         export_vars
         configure_make_install
     elif [ $ABI = "armeabi-v7a" ]
@@ -115,6 +115,8 @@ do
         ANDROID_API_VERSION=19
         ARCH_PREFIX=$ABI
         TOOLCHAINS_PREFIX=arm-linux-androideabi
+        CFLAGS="${COMM_CFLAGS} -mfloat-abi=softfp -mfpu=neon -march=armv7-a"
+        CPPFLAGS="${CFLAGS}"
         make_standalone_toolchain arm $ANDROID_API_VERSION ${TOOLCHAINS}
         export_vars
         configure_make_install
@@ -123,6 +125,8 @@ do
         ANDROID_API_VERSION=21
         ARCH_PREFIX=$ABI
         TOOLCHAINS_PREFIX=aarch64-linux-android
+        CFLAGS="${COMM_CFLAGS} -mfloat-abi=softfp -mfpu=neon -march=armv8-a"
+        CPPFLAGS="${CFLAGS}"
         make_standalone_toolchain arm64 $ANDROID_API_VERSION ${TOOLCHAINS}
         export_vars
         configure_make_install
@@ -131,6 +135,8 @@ do
         ANDROID_API_VERSION=19
         ARCH_PREFIX=$ABI
         TOOLCHAINS_PREFIX=i686-linux-android
+        CFLAGS="${COMM_CFLAGS}"
+        CPPFLAGS="${CFLAGS}"
         make_standalone_toolchain x86 $ANDROID_API_VERSION ${TOOLCHAINS}
         export_vars
         configure_make_install
@@ -139,6 +145,8 @@ do
         ANDROID_API_VERSION=21
         ARCH_PREFIX=$ABI
         TOOLCHAINS_PREFIX=x86_64-linux-android
+        CFLAGS="${COMM_CFLAGS}"
+        CPPFLAGS="${CFLAGS}"
         make_standalone_toolchain x86_64 $ANDROID_API_VERSION ${TOOLCHAINS}
         export_vars
         configure_make_install

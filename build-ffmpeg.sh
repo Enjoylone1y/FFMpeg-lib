@@ -1,17 +1,16 @@
 #!/bin/sh
 
-NDK_ROOT=/Users/patch/Work/android-ndk-r19c
+NDK_ROOT=/Users/patch/Work/android-ndk-r16b
 
 ANDROID_API_VERSION=19
 NDK_TOOLCHAIN_ABI_VERSION=4.9
 
-ABIS="armeabi-v7a arm64-v8a x86 x86_64"
+ABIS="armeabi-v7a arm64-v8a"
 
 #路径定义
 CWD=`pwd`
 TOOLCHAINS=$CWD/"toolchains"
 TOOLCHAINS_PREFIX="arm-linux-androideabi"
-TOOLCHAINS_CLANG_PREFIX="arm-linux-androideabi"
 TOOLCHAINS_PATH=${TOOLCHAINS}/bin
 SYSROOT=${TOOLCHAINS}/sysroot
 EXTERNAL_PATH=$CWD/"libs"
@@ -27,10 +26,19 @@ THIN=$CWD/"thin-ffmpeg"
 ARCH_PREFIX="armeabi-v7a"
 
 #编译标志位定义
-COMM_CFLAGS="${CFLAGS} --sysroot=${SYSROOT} -I${SYSROOT}/usr/include -I${TOOLCHAINS}/include"
-COMM_CPPFLAGS="${COMM_CFLAGS}"
-COMM_LDFLAGS="${LDFLAGS} -L${SYSROOT}/usr/lib -L${TOOLCHAINS}/lib"
+COMM_CFLAGS="${CFLAGS} --sysroot=${SYSROOT} -I${SYSROOT}/usr/include -I${TOOLCHAINS}/include -DANDROID -fPIC -O3"
 
+LDFLAGS="${LDFLAGS} -L${SYSROOT}/usr/lib -L${TOOLCHAINS}/lib"
+
+#X264
+X264_INCLUDE=$EXTERNAL_PATH/x264/armeabi-v7a/include
+X264_LIB=$EXTERNAL_PATH/x264/armeabi-v7a/lib
+#FDK-AAC
+FDK_INCLUDE=$EXTERNAL_PATH/fdk-aac/armeabi-v7a/include
+FDK_LIB=$EXTERNAL_PATH/fdk-aac/armeabi-v7a/lib
+#libmp3lame
+LAME_INCLUDE=$EXTERNAL_PATH/lame/armeabi-v7a/include
+LAME_LIB=$EXTERNAL_PATH/lame/armeabi-v7a/lib
 
 function make_standalone_toolchain()
 {
@@ -50,8 +58,8 @@ function export_vars()
     export TOOLCHAINS_PATH
     export SYSROOT
 
-    export CC=${TOOLCHAINS_PATH}/${TOOLCHAINS_CLANG_PREFIX}-clang
-    export CXX=${TOOLCHAINS_PATH}/${TOOLCHAINS_CLANG_PREFIX}-clang++
+    export CC=${TOOLCHAINS_PATH}/${TOOLCHAINS_PREFIX}-clang
+    export CXX=${TOOLCHAINS_PATH}/${TOOLCHAINS_PREFIX}-clang++
 
     export CPP=${TOOLCHAINS_PATH}/${TOOLCHAINS_PREFIX}-cpp
     export AR=${TOOLCHAINS_PATH}/${TOOLCHAINS_PREFIX}-ar
@@ -79,10 +87,6 @@ function export_vars()
     export LDFLAGS
 }
 
-
-# --enable-libx264
-# --enable-libmp3lame
-# --enable-libfdk-aac
             
 
 function configure_make_install()
@@ -92,10 +96,11 @@ function configure_make_install()
     echo "${TOOLCHAINS_CLANG_PREFIX}"
     echo "${CFLAGS}"
     echo "${LDFLAGS}"
+    echo "${FDK_INCLUDE}"
+    echo "${FDK_LIB}"
+    
 
-    cd "$CWD/$SOURCE"
-
-    ./configure \
+    $CWD/$SOURCE/configure \
         --disable-stripping \
             --disable-ffmpeg \
             --disable-ffplay \
@@ -119,6 +124,7 @@ function configure_make_install()
             --enable-version3 \
             --enable-nonfree \
             --enable-gpl \
+            --enable-jni \
             --enable-static \
             --enable-cross-compile \
             --disable-bsfs \
@@ -127,40 +133,101 @@ function configure_make_install()
             --enable-bsf=h264_mp4toannexb \
             --enable-bsf=h264_metadata \
             --disable-encoders \
-            --enable-encoder=aac \
             --enable-encoder=flv \
             --enable-encoder=pcm_s16le \
+            --enable-encoder=libx264 \
+            --enable-encoder=libfdk_aac \
+            --enable-encoder=aac \
+            --enable-encoder=libmp3lame \
+            --enable-encoder=mjpeg \
             --enable-encoder=mpeg4 \
+            --enable-encoder=rawvideo \
+            --enable-encoder=png \
             --enable-encoder=gif \
             --disable-decoders \
-            --enable-decoder=aac \
-            --enable-decoder=h264 \
-            --enable-decoder=mp3 \
-            --enable-decoder=flv \
-            --enable-decoder=gif \
+            --enable-decoder=rawvideo \
+            --enable-decoder=mjpeg \
             --enable-decoder=mpeg4 \
-            --enable-decoder=pcm_s16le \
+            --enable-decoder=h264 \
+            --enable-decoder=aac \
+            --enable-decoder=mp3 \
+            --enable-decoder=aac_latm \
+            --enable-decoder=gif \
+            --enable-decoder=png \
+            --enable-decoder=pcm_f16le \
+            --enable-decoder=pcm_f24le \
+            --enable-decoder=pcm_f32be \
+            --enable-decoder=pcm_f32le \
+            --enable-decoder=pcm_f64be \
+            --enable-decoder=pcm_f64le \
+            --enable-decoder=libfdk_aac \
             --disable-parsers \
             --enable-parser=aac \
+            --enable-parser=h264 \
+            --enable-parser=mpeg4video \
+            --enable-parser=mjpeg \
+            --enable-parser=ac3 \
+            --enable-parser=png \
+            --enable-parser=mpegaudio \
+            --disable-filters \
+            --enable-filter=aresample \
+            --enable-filter=asetpts \
+            --enable-filter=setpts \
+            --enable-filter=ass \
+            --enable-filter=scale \
+            --enable-filter=concat \
+            --enable-filter=atempo \
+            --enable-filter=movie \
+            --enable-filter=overlay \
+            --enable-filter=rotate \
+            --enable-filter=transpose \
+            --enable-filter=hflip \
+            --enable-filter=amix \
+            --enable-filter=fade \
+            --enable-filter=afade \
+            --enable-filter=areverse \
+            --enable-filter=volume \
+            --enable-filter=aevalsrc \
+            --enable-filter=adelay \
             --disable-muxers \
-            --enable-muxer=flv \
-            --enable-muxer=wav \
-            --enable-muxer=adts \
-            --enable-muxer=h264 \
-            --enable-muxer=mp3 \
+            --enable-muxer=mov \
             --enable-muxer=mp4 \
+            --enable-muxer=mp3 \
+            --enable-muxer=h264 \
+            --enable-muxer=mpjpeg \
+            --enable-muxer=rawvideo \
+            --enable-muxer=wav \
+            --enable-muxer=mpegts \
+            --enable-muxer=dts \
+            --enable-muxer=gif \
+            --enable-muxer=flv \
             --disable-demuxers \
+            --enable-demuxer=mov \
+            --enable-demuxer=h264 \
             --enable-demuxer=aac \
             --enable-demuxer=mp3 \
-            --enable-demuxer=flv \
-            --enable-demuxer=h264 \
+            --enable-demuxer=rawvideo \
+            --enable-demuxer=avi \
             --enable-demuxer=wav \
+            --enable-demuxer=flv \
             --enable-demuxer=gif \
+            --enable-demuxer=ogg \
+            --enable-demuxer=dts \
+            --enable-demuxer=m4v \
+            --enable-demuxer=concat \
+            --enable-demuxer=mpegts \
+            --enable-demuxer=mjpeg \
             --disable-protocols \
             --enable-protocol=rtmp \
             --enable-protocol=file \
-            --target-os=linux \
-            --arch="${TOOLCHAINS_PREFIX}" \
+            --enable-libx264 \
+            --enable-libfdk-aac \
+            --enable-libmp3lame \
+            --target-os=android \
+            --sysroot="$SYSROOT" \
+            --extra-cflags="$CFLAGS -I$LAME_INCLUDE -I$FDK_INCLUDE -I$X264_INCLUDE" \
+            --extra-ldflags="$LDFLAGS -L$LAME_LIB -L$FDK_LIB -L$X264_LIB" \
+            --arch="$TOOLCHAINS_PREFIX" \
             --cross-prefix="${TOOLCHAINS_PATH}/${TOOLCHAINS_PREFIX}-"\
            --prefix="$THIN/$ARCH_PREFIX"
 
@@ -180,27 +247,30 @@ do
     then
         ARCH_PREFIX=$ABI
         ANDROID_API_VERSION=19
-        # CFLAGS="${COMM_CFLAGS} -I${EXTERNAL_PATH}/fdk-aac/armeabi/include -I${EXTERNAL_PATH}/lame/armeabi/include -I${EXTERNAL_PATH}/x264/armeabi/include"    
-        # LDFLAGS="${COMM_LDFLAGS} -L${EXTERNAL_PATH}/fdk-aac/armeabi/lib -L${EXTERNAL_PATH}/lame/armeabi/lib -L${EXTERNAL_PATH}/x264/armeabi/lib"
         CFLAGS="${COMM_CFLAGS} -march=armv5 -mfloat-abi=softfp -mfpu=neon -D__ANDROID_API__=19"
-        CPPFLAGS="${CFLAGS}"
-        LDFLAGS="${COMM_LDFLAGS}"
         TOOLCHAINS_PREFIX=arm-linux-androideabi
         TOOLCHAINS_CLANG_PREFIX=arm-linux-androideabi
-        make_standalone_toolchain arm android-$ANDROID_API_VERSION ${TOOLCHAINS}
+        X264_INCLUDE=$EXTERNAL_PATH/x264/$ARCH_PREFIX/include
+        X264_LIB=$EXTERNAL_PATH/x264/$ARCH_PREFIX/lib
+        FDK_INCLUDE=$EXTERNAL_PATH/fdk-aac/$ARCH_PREFIX/include
+        FDK_LIB=$EXTERNAL_PATH/fdk-aac/$ARCH_PREFIX/lib
+        LAME_INCLUDE=$EXTERNAL_PATH/lame/$ARCH_PREFIX/include
+        LAME_LIB=$EXTERNAL_PATH/lame/$ARCH_PREFIX/lib
+        make_standalone_toolchain arm $ANDROID_API_VERSION ${TOOLCHAINS}
         export_vars
         configure_make_install
     elif [ $ABI = "armeabi-v7a" ]
     then
         ARCH_PREFIX=$ABI
         ANDROID_API_VERSION=19
-        # CFLAGS="${COMM_CFLAGS} -I${EXTERNAL_PATH}/fdk-aac/armeabi-v7a/include -I${EXTERNAL_PATH}/lame/armeabi-v7a/include -I${EXTERNAL_PATH}/x264/armeabi-v7a/include"   
-        # LDFLAGS="${COMM_LDFLAGS} -L${EXTERNAL_PATH}/fdk-aac/armeabi-v7a/lib -L${EXTERNAL_PATH}/lame/armeabi-v7a/lib -L${EXTERNAL_PATH}/x264/armeabi-v7a/lib"
         CFLAGS="${COMM_CFLAGS} -march=armv7-a -mfloat-abi=softfp -mfpu=neon -D__ANDROID_API__=19"
-        CPPFLAGS="${CFLAGS}"
-        LDFLAGS="${COMM_LDFLAGS}"
         TOOLCHAINS_PREFIX=arm-linux-androideabi
-        TOOLCHAINS_CLANG_PREFIX=armv7-linux-androideabi${ANDROID_API_VERSION}
+        X264_INCLUDE=$EXTERNAL_PATH/x264/$ARCH_PREFIX/include
+        X264_LIB=$EXTERNAL_PATH/x264/$ARCH_PREFIX/lib
+        FDK_INCLUDE=$EXTERNAL_PATH/fdk-aac/$ARCH_PREFIX/include
+        FDK_LIB=$EXTERNAL_PATH/fdk-aac/$ARCH_PREFIX/lib
+        LAME_INCLUDE=$EXTERNAL_PATH/lame/$ARCH_PREFIX/include
+        LAME_LIB=$EXTERNAL_PATH/lame/$ARCH_PREFIX/lib
         make_standalone_toolchain arm $ANDROID_API_VERSION ${TOOLCHAINS}
         export_vars
         configure_make_install
@@ -208,13 +278,14 @@ do
     then
         ARCH_PREFIX=$ABI
         ANDROID_API_VERSION=21
-        # CFLAGS="${COMM_CFLAGS} -I${EXTERNAL_PATH}/fdk-aac/arm64-v8a/include -I${EXTERNAL_PATH}/lame/arm64-v8a/include -I${EXTERNAL_PATH}/x264/arm64-v8a/include"    
-        # LDFLAGS="${COMM_LDFLAGS} -L${EXTERNAL_PATH}/fdk-aac/arm64-v8a/lib -L${EXTERNAL_PATH}/lame/arm64-v8a/lib -L${EXTERNAL_PATH}/x264/arm64-v8a/lib"
         CFLAGS="${COMM_CFLAGS} -march=armv8-a -D__ANDROID_API__=21"
-        CPPFLAGS="${CFLAGS}"
-        LDFLAGS="${COMM_LDFLAGS}"
         TOOLCHAINS_PREFIX=aarch64-linux-android
-        TOOLCHAINS_CLANG_PREFIX=aarch64-linux-android${ANDROID_API_VERSION}
+        X264_INCLUDE=$EXTERNAL_PATH/x264/$ARCH_PREFIX/include
+        X264_LIB=$EXTERNAL_PATH/x264/$ARCH_PREFIX/lib
+        FDK_INCLUDE=$EXTERNAL_PATH/fdk-aac/$ARCH_PREFIX/include
+        FDK_LIB=$EXTERNAL_PATH/fdk-aac/$ARCH_PREFIX/lib
+        LAME_INCLUDE=$EXTERNAL_PATH/lame/$ARCH_PREFIX/include
+        LAME_LIB=$EXTERNAL_PATH/lame/$ARCH_PREFIX/lib
         make_standalone_toolchain arm64 $ANDROID_API_VERSION ${TOOLCHAINS}
         export_vars
         configure_make_install
@@ -222,13 +293,15 @@ do
     then
         ARCH_PREFIX=$ABI
         ANDROID_API_VERSION=19
-        # CFLAGS="${COMM_CFLAGS} -I${EXTERNAL_PATH}/fdk-aac/x86/include -I${EXTERNAL_PATH}/lame/x86/include -I${EXTERNAL_PATH}/x264/x86/include"  
-        # LDFLAGS="${COMM_LDFLAGS} -L${EXTERNAL_PATH}/fdk-aac/x86/lib -L${EXTERNAL_PATH}/lame/x86/lib -L${EXTERNAL_PATH}/x264/x86/lib"
         CFLAGS="${COMM_CFLAGS} -D__ANDROID_API__=19"
         CPPFLAGS="${CFLAGS}"
-        LDFLAGS="${COMM_LDFLAGS}"  
         TOOLCHAINS_PREFIX=i686-linux-android
-        TOOLCHAINS_CLANG_PREFIX=i686-linux-android${ANDROID_API_VERSION}
+        X264_INCLUDE=$EXTERNAL_PATH/x264/$ARCH_PREFIX/include
+        X264_LIB=$EXTERNAL_PATH/x264/$ARCH_PREFIX/lib
+        FDK_INCLUDE=$EXTERNAL_PATH/fdk-aac/$ARCH_PREFIX/include
+        FDK_LIB=$EXTERNAL_PATH/fdk-aac/$ARCH_PREFIX/lib
+        LAME_INCLUDE=$EXTERNAL_PATH/lame/$ARCH_PREFIX/include
+        LAME_LIB=$EXTERNAL_PATH/lame/$ARCH_PREFIX/lib
         make_standalone_toolchain x86 $ANDROID_API_VERSION ${TOOLCHAINS}
         export_vars
         configure_make_install
@@ -236,14 +309,14 @@ do
     then
         ARCH_PREFIX=$ABI
         ANDROID_API_VERSION=21
-        # CFLAGS="${COMM_CFLAGS} -I${EXTERNAL_PATH}/fdk-aac/x86_64/include -I${EXTERNAL_PATH}/lame/x86_64/include -I${EXTERNAL_PATH}/x264/x86_64/include"  
-        # LDFLAGS="${COMM_LDFLAGS} -L${EXTERNAL_PATH}/fdk-aac/x86_64/lib -L${EXTERNAL_PATH}/lame/x86_64/lib -L${EXTERNAL_PATH}/x264/x86_64/lib"
-        # CPPFLAGS="${COMM_CFLAGS}"
         CFLAGS="${COMM_CFLAGS} -D__ANDROID_API__=21"
-        CPPFLAGS="${CFLAGS}"
-        LDFLAGS="${COMM_LDFLAGS}"
         TOOLCHAINS_PREFIX=x86_64-linux-android
-        TOOLCHAINS_CLANG_PREFIX=x86_64-linux-android${ANDROID_API_VERSION}
+        X264_INCLUDE=$EXTERNAL_PATH/x264/$ARCH_PREFIX/include
+        X264_LIB=$EXTERNAL_PATH/x264/$ARCH_PREFIX/lib
+        FDK_INCLUDE=$EXTERNAL_PATH/fdk-aac/$ARCH_PREFIX/include
+        FDK_LIB=$EXTERNAL_PATH/fdk-aac/$ARCH_PREFIX/lib
+        LAME_INCLUDE=$EXTERNAL_PATH/lame/$ARCH_PREFIX/include
+        LAME_LIB=$EXTERNAL_PATH/lame/$ARCH_PREFIX/lib
         make_standalone_toolchain x86_64 $ANDROID_API_VERSION ${TOOLCHAINS}
         export_vars
         configure_make_install

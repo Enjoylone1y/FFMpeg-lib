@@ -1,0 +1,14 @@
+prefix=/Users/patch/Work/ffmpeg/thin-ffmpeg/x86_64
+exec_prefix=${prefix}
+libdir=/Users/patch/Work/ffmpeg/thin-ffmpeg/x86_64/lib
+includedir=/Users/patch/Work/ffmpeg/thin-ffmpeg/x86_64/include
+
+Name: libavutil
+Description: FFmpeg utility library
+Version: 56.51.100
+Requires: 
+Requires.private: 
+Conflicts:
+Libs: -L${libdir}  -lavutil -pthread -lm
+Libs.private: 
+Cflags: -I${includedir}

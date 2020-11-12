@@ -1,0 +1,46 @@
+libMpegTPEnc/src/tpenc_latm.lo: libMpegTPEnc/src/tpenc_latm.cpp \
+ libMpegTPEnc/src/tpenc_latm.h libMpegTPEnc/include/tpenc_lib.h \
+ libMpegTPEnc/include/tp_data.h libSYS/include/machine_type.h \
+ /Users/patch/Work/ffmpeg/toolchains/lib/gcc/x86_64-linux-android/4.9.x/include/stddef.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/assert.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/sys/cdefs.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/android/api-level.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/android/versioning.h \
+ libSYS/include/FDK_audio.h libSYS/include/machine_type.h \
+ libSYS/include/genericStds.h libSYS/include/syslib_channelMapDescr.h \
+ libFDK/include/FDK_bitstream.h libFDK/include/FDK_bitbuffer.h \
+ libFDK/include/FDK_archdef.h libSYS/include/genericStds.h
+
+libMpegTPEnc/src/tpenc_latm.h:
+
+libMpegTPEnc/include/tpenc_lib.h:
+
+libMpegTPEnc/include/tp_data.h:
+
+libSYS/include/machine_type.h:
+
+/Users/patch/Work/ffmpeg/toolchains/lib/gcc/x86_64-linux-android/4.9.x/include/stddef.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/assert.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/sys/cdefs.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/android/api-level.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/android/versioning.h:
+
+libSYS/include/FDK_audio.h:
+
+libSYS/include/machine_type.h:
+
+libSYS/include/genericStds.h:
+
+libSYS/include/syslib_channelMapDescr.h:
+
+libFDK/include/FDK_bitstream.h:
+
+libFDK/include/FDK_bitbuffer.h:
+
+libFDK/include/FDK_archdef.h:
+
+libSYS/include/genericStds.h:

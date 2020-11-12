@@ -1,0 +1,28 @@
+libFDK/src/FDK_core.lo: libFDK/src/FDK_core.cpp libFDK/include/FDK_core.h \
+ libSYS/include/FDK_audio.h libSYS/include/machine_type.h \
+ /Users/patch/Work/ffmpeg/toolchains/lib/gcc/x86_64-linux-android/4.9.x/include/stddef.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/assert.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/sys/cdefs.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/android/api-level.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/android/versioning.h \
+ libSYS/include/genericStds.h libSYS/include/syslib_channelMapDescr.h
+
+libFDK/include/FDK_core.h:
+
+libSYS/include/FDK_audio.h:
+
+libSYS/include/machine_type.h:
+
+/Users/patch/Work/ffmpeg/toolchains/lib/gcc/x86_64-linux-android/4.9.x/include/stddef.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/assert.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/sys/cdefs.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/android/api-level.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/android/versioning.h:
+
+libSYS/include/genericStds.h:
+
+libSYS/include/syslib_channelMapDescr.h:

@@ -1,0 +1,24 @@
+libFDK/src/huff_nodes.lo: libFDK/src/huff_nodes.cpp \
+ libFDK/include/huff_nodes.h libSYS/include/genericStds.h \
+ libSYS/include/machine_type.h \
+ /Users/patch/Work/ffmpeg/toolchains/lib/gcc/x86_64-linux-android/4.9.x/include/stddef.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/assert.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/sys/cdefs.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/android/api-level.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/android/versioning.h
+
+libFDK/include/huff_nodes.h:
+
+libSYS/include/genericStds.h:
+
+libSYS/include/machine_type.h:
+
+/Users/patch/Work/ffmpeg/toolchains/lib/gcc/x86_64-linux-android/4.9.x/include/stddef.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/assert.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/sys/cdefs.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/android/api-level.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/android/versioning.h:

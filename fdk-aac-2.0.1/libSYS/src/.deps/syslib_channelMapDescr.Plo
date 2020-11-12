@@ -1,0 +1,22 @@
+libSYS/src/syslib_channelMapDescr.lo: \
+ libSYS/src/syslib_channelMapDescr.cpp \
+ libSYS/include/syslib_channelMapDescr.h libSYS/include/machine_type.h \
+ /Users/patch/Work/ffmpeg/toolchains/lib/gcc/x86_64-linux-android/4.9.x/include/stddef.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/assert.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/sys/cdefs.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/android/api-level.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/android/versioning.h
+
+libSYS/include/syslib_channelMapDescr.h:
+
+libSYS/include/machine_type.h:
+
+/Users/patch/Work/ffmpeg/toolchains/lib/gcc/x86_64-linux-android/4.9.x/include/stddef.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/assert.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/sys/cdefs.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/android/api-level.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/android/versioning.h:

@@ -1,0 +1,87 @@
+libDRCdec/src/drcDec_rom.lo: libDRCdec/src/drcDec_rom.cpp \
+ libDRCdec/src/drcDec_types.h libFDK/include/common_fix.h \
+ libFDK/include/FDK_archdef.h libSYS/include/machine_type.h \
+ /Users/patch/Work/ffmpeg/toolchains/lib/gcc/x86_64-linux-android/4.9.x/include/stddef.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/assert.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/sys/cdefs.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/android/api-level.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/android/versioning.h \
+ libFDK/include/fixmul.h libFDK/include/x86/fixmul_x86.h \
+ libFDK/include/abs.h libFDK/include/x86/abs_x86.h libFDK/include/clz.h \
+ libFDK/include/x86/clz_x86.h libFDK/include/fixmadd.h \
+ libFDK/include/fixminmax.h libFDK/include/cplx_mul.h \
+ libFDK/include/common_fix.h libFDK/include/fixpoint_math.h \
+ libFDK/include/scale.h libSYS/include/genericStds.h \
+ libSYS/include/machine_type.h libFDK/include/x86/fixpoint_math_x86.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/math.h \
+ /Users/patch/Work/ffmpeg/toolchains/lib/gcc/x86_64-linux-android/4.9.x/include-fixed/limits.h \
+ /Users/patch/Work/ffmpeg/toolchains/lib/gcc/x86_64-linux-android/4.9.x/include-fixed/syslimits.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/limits.h \
+ /Users/patch/Work/ffmpeg/toolchains/lib/gcc/x86_64-linux-android/4.9.x/include/float.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/linux/limits.h \
+ /Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/bits/posix_limits.h \
+ libDRCdec/src/drcDec_rom.h
+
+libDRCdec/src/drcDec_types.h:
+
+libFDK/include/common_fix.h:
+
+libFDK/include/FDK_archdef.h:
+
+libSYS/include/machine_type.h:
+
+/Users/patch/Work/ffmpeg/toolchains/lib/gcc/x86_64-linux-android/4.9.x/include/stddef.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/assert.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/sys/cdefs.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/android/api-level.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/android/versioning.h:
+
+libFDK/include/fixmul.h:
+
+libFDK/include/x86/fixmul_x86.h:
+
+libFDK/include/abs.h:
+
+libFDK/include/x86/abs_x86.h:
+
+libFDK/include/clz.h:
+
+libFDK/include/x86/clz_x86.h:
+
+libFDK/include/fixmadd.h:
+
+libFDK/include/fixminmax.h:
+
+libFDK/include/cplx_mul.h:
+
+libFDK/include/common_fix.h:
+
+libFDK/include/fixpoint_math.h:
+
+libFDK/include/scale.h:
+
+libSYS/include/genericStds.h:
+
+libSYS/include/machine_type.h:
+
+libFDK/include/x86/fixpoint_math_x86.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/math.h:
+
+/Users/patch/Work/ffmpeg/toolchains/lib/gcc/x86_64-linux-android/4.9.x/include-fixed/limits.h:
+
+/Users/patch/Work/ffmpeg/toolchains/lib/gcc/x86_64-linux-android/4.9.x/include-fixed/syslimits.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/limits.h:
+
+/Users/patch/Work/ffmpeg/toolchains/lib/gcc/x86_64-linux-android/4.9.x/include/float.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/linux/limits.h:
+
+/Users/patch/Work/ffmpeg/toolchains/sysroot/usr/include/bits/posix_limits.h:
+
+libDRCdec/src/drcDec_rom.h:

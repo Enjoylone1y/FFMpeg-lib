@@ -5,7 +5,7 @@ NDK_ROOT=/Users/patch/Work/android-ndk-r16b
 ANDROID_API_VERSION=19
 NDK_TOOLCHAIN_ABI_VERSION=4.9
 
-ABIS="armeabi-v7a"
+ABIS="armeabi-v7a arm64-v8a x86 x86_64"
 
 CWD=`pwd`
 

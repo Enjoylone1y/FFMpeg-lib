@@ -46,8 +46,8 @@ function export_vars()
     export TOOLCHAINS_PATH
     export SYSROOT
 
-    export CC=${TOOLCHAINS_PATH}/${TOOLCHAINS_PREFIX}-gcc
-    export CXX=${TOOLCHAINS_PATH}/${TOOLCHAINS_PREFIX}-g++
+    export CC=${TOOLCHAINS_PATH}/${TOOLCHAINS_PREFIX}-clang
+    export CXX=${TOOLCHAINS_PATH}/${TOOLCHAINS_PREFIX}-clang++
 
     export CPP=${TOOLCHAINS_PATH}/${TOOLCHAINS_PREFIX}-cpp
     export AR=${TOOLCHAINS_PATH}/${TOOLCHAINS_PREFIX}-ar
@@ -82,9 +82,7 @@ function configure_make_install()
     echo "${CFLAGS}"
     echo "${LDFLAGS}"
 
-    cd "$CWD/$SOURCE"
-
-    ./configure \
+    $CWD/$SOURCE/configure \
 	    --enable-static \
         --enable-pic \
         --enable-strip \

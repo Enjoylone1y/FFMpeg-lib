@@ -1,6 +1,6 @@
 #!/bin/sh
 
-NDK_ROOT=/Users/patch/Library/Android/android-ndk-r16b
+NDK_ROOT=/Users/patch/Work/android-ndk-r16b
 
 ANDROID_API_VERSION=19
 NDK_TOOLCHAIN_ABI_VERSION=4.9
@@ -47,8 +47,8 @@ function export_vars()
     export TOOLCHAINS_PATH
     export SYSROOT
 
-    export CC=${TOOLCHAINS_PATH}/${TOOLCHAINS_PREFIX}-gcc
-    export CXX=${TOOLCHAINS_PATH}/${TOOLCHAINS_PREFIX}-g++
+    export CC=${TOOLCHAINS_PATH}/${TOOLCHAINS_PREFIX}-clang
+    export CXX=${TOOLCHAINS_PATH}/${TOOLCHAINS_PREFIX}-clang++
 
     export CPP=${TOOLCHAINS_PATH}/${TOOLCHAINS_PREFIX}-cpp
     export AR=${TOOLCHAINS_PATH}/${TOOLCHAINS_PREFIX}-ar
@@ -83,13 +83,11 @@ function configure_make_install()
     echo "${CFLAGS}"
     echo "${LDFLAGS}"
 
-    cd "$CWD/$SOURCE"
-
-    ./configure \
+    $CWD/$SOURCE/configure \
 	    --enable-static \
         --disable-shared \
-        --with-sysroot=$SYSROOT \
-        --host=$TOOLCHAINS_PREFIX \
+        --with-sysroot="$SYSROOT" \
+        --host="$TOOLCHAINS_PREFIX" \
        --prefix="$THIN/$ARCH_PREFIX"
 
     make clean

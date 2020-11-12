@@ -20,7 +20,7 @@ LDFLAGS="${LDFLAGS} -L${SYSROOT}/usr/lib -L${TOOLCHAINS}/lib"
 
 
 # directories
-SOURCE="fdk-aac"
+SOURCE="fdk-aac-2.0.1"
 FAT="fat-fdk-aac"
 SCRATCH="scratch-fdk-aac"
 
